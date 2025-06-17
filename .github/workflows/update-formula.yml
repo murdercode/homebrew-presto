@@ -1,0 +1,32 @@
+name: Update Homebrew Formula
+
+on:
+  repository_dispatch:
+    types: [new-release]
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tap repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update formula version
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          if [ -z "$VERSION" ]; then
+            echo "Error: Version not provided"
+            exit 1
+          fi
+          
+          # Update version in Cask formula
+          sed -i "s/version \".*\"/version \"$VERSION\"/" Casks/presto.rb
+          
+          # Commit changes
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add Casks/presto.rb
+          git commit -m "Update Presto to version $VERSION" || exit 0
+          git push
