@@ -25,31 +25,31 @@ sed -i '' "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" src-tauri/tauri.con
 echo "🔨 Build dell'applicazione..."
 npm run build
 
-# 4. Trova il file DMG generato
-DMG_PATH=$(find src-tauri/target -name "*.dmg" -type f | head -1)
-if [ -z "$DMG_PATH" ]; then
-    echo "❌ Errore: File DMG non trovato"
+# 4. Trova il file APP.TAR.GZ generato
+APP_PATH=$(find src-tauri/target -name "*.app.tar.gz" -type f | head -1)
+if [ -z "$APP_PATH" ]; then
+    echo "❌ Errore: File APP.TAR.GZ non trovato"
     exit 1
 fi
 
-echo "📁 DMG trovato: $DMG_PATH"
+echo "📁 APP.TAR.GZ trovato: $APP_PATH"
 
 # 5. Calcola SHA256
 echo "🔐 Calcolo SHA256..."
-SHA256=$(shasum -a 256 "$DMG_PATH" | cut -d' ' -f1)
+SHA256=$(shasum -a 256 "$APP_PATH" | cut -d' ' -f1)
 echo "SHA256: $SHA256"
 
 # 6. Aggiorna il Cask formula
-echo "📝 Aggiornamento Formula/presto.rb..."
-sed -i '' "s/version \".*\"/version \"$VERSION\"/" Formula/presto.rb
-sed -i '' "s/sha256 .*/sha256 \"$SHA256\"/" Formula/presto.rb
+echo "📝 Aggiornamento Casks/presto.rb..."
+sed -i '' "s/version \".*\"/version \"$VERSION\"/" Casks/presto.rb
+sed -i '' "s/sha256 .*/sha256 \"$SHA256\"/" Casks/presto.rb
 
 echo "✅ Rilascio preparato!"
 echo ""
 echo "📋 Prossimi passi:"
 echo "1. Commit e push delle modifiche"
 echo "2. Crea un release su GitHub con tag v$VERSION"
-echo "3. Carica il file DMG: $DMG_PATH"
+echo "3. Carica il file APP.TAR.GZ: $APP_PATH"
 echo "4. Pubblica il tap su GitHub"
 echo ""
 echo "📖 Per installare:"

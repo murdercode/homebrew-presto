@@ -28,6 +28,10 @@ cp "$CASK_FILE" "$CASK_FILE.backup"
 # Aggiorna la versione nel file cask
 sed -i '' "s/version \".*\"/version \"$VERSION\"/" "$CASK_FILE"
 
+# Assicurati che il cask punti ai file .app.tar.gz e non ai .dmg
+sed -i '' "s|presto_#{version}_aarch64\.dmg|presto_#{version}_aarch64\.app\.tar\.gz|" "$CASK_FILE"
+sed -i '' "s|presto_#{version}_x64\.dmg|presto_#{version}_x64\.app\.tar\.gz|" "$CASK_FILE"
+
 echo "✅ Versione aggiornata a $VERSION nel file cask"
 
 # Verifica che ci siano cambiamenti
