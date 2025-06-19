@@ -3,11 +3,11 @@ cask "presto" do
   sha256 :no_check  # Will be updated with actual SHA256 when you have a release
 
   on_arm do
-    url "https://github.com/murdercode/presto/releases/download/v#{version}/presto_#{version}_aarch64.app.tar.gz"
+    url "https://github.com/murdercode/presto/releases/download/v#{version}/presto_aarch64.app.tar.gz"
   end
 
   on_intel do
-    url "https://github.com/murdercode/presto/releases/download/v#{version}/presto_#{version}_x64.app.tar.gz"
+    url "https://github.com/murdercode/presto/releases/download/v#{version}/presto_x64.app.tar.gz"
   end
 
   name "Presto"
