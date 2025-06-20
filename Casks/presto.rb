@@ -21,6 +21,13 @@ cask "presto" do
 
   app "presto.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-cr", "#{appdir}/presto.app"]
+    system_command "/usr/bin/xattr", 
+                   args: ["-rd", "com.apple.quarantine", "#{appdir}/presto.app"]
+  end
+
   zap trash: [
     "~/Library/Application Support/com.presto.app",
     "~/Library/Caches/com.presto.app",
