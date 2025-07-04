@@ -1,5 +1,5 @@
 cask "presto" do
-  version "0.3.5"
+  version "0.3.6"
   sha256 :no_check  # Will be updated with actual SHA256 when you have a release
 
   on_arm do
