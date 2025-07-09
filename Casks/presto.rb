@@ -26,6 +26,8 @@ cask "presto" do
                    args: ["-cr", "#{appdir}/presto.app"]
     system_command "/usr/bin/xattr", 
                    args: ["-rd", "com.apple.quarantine", "#{appdir}/presto.app"]
+    system_command "/bin/mkdir",
+                    args: ["-p", "~/Library/Application Support/com.presto.app"]
   end
 
   zap trash: [
